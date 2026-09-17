@@ -4,12 +4,14 @@
 #
 # steps:
 # build my own micrograd
+# implement loss function and parameters adjustment based on it
 # learn basics of torch
 # switch to torch
 # implement layers
 # implement loss calculation
 # train on simple data to predict simple formulars
 # create ml model to predict something harder (the next stock price or number on image, ...)
+import math
 
 from draw import draw_dot
 
@@ -39,6 +41,16 @@ class Value:
         res_v._backward = _back
         return res_v
 
+    def tanh (self):
+        t = self.data
+        new_data = (math.exp(2 * t) - 1) / (math.exp(2 * t) + 1)
+        def _back():
+            self.grad = 1 - new_data**2
+        res_value = Value(new_data, (self,), "tanh")
+        res_value._backward = _back
+        return res_value
+
+
     def __truediv__(self, other):
         return Value(self.data/other.data)
 
@@ -65,11 +77,12 @@ class Value:
             node._backward()
 
 if __name__ == '__main__':
-    a = Value(33.0, label="a")
-    b = Value(2.0, label="b")
-    c = Value(4.0, label="c")
-    d = Value(2.0, label="d")
+    a = Value(0.4, label="a")
+    b = Value(0.5, label="b")
+    c = Value(-0.4, label="c")
+    d = Value(0.2, label="d")
     r = a * b + a * c + d
-    r.backward()
-    res = draw_dot(r)
+    o = r.tanh()
+    o.backward()
+    res = draw_dot(o)
 
