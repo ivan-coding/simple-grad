@@ -1,0 +1,20 @@
+RANDOM_SEED = 42
+
+TRAINING_INPUTS = [
+    [-4.0, 1.0, -3.0],
+    [-3.0, -2.0, 1.5],
+    [-0.5, 2.0, 1.0],
+    [4.0, 2.0, -1.0],
+]
+TRAINING_TARGETS = [-1.0, 1.0, 1.0, 1.0]
+
+HIDDEN_LAYER_SIZES = [4, 4]
+OUTPUT_SIZE = 1
+WEIGHT_INIT_RANGE = (-1.0, 1.0)
+
+LEARNING_RATE = 0.01
+TRAINING_STEPS = 200
+LOG_EVERY_N_STEPS = 20
+
+RENDER_LOSS_GRAPHS = True
+GRAPH_OUTPUT_DIR = "diagrams"
